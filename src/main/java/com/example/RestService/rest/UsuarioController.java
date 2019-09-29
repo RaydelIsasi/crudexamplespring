@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +32,7 @@ import com.example.RestService.service.IUsuario;
 import com.example.RestService.service.UsuarioServiceImpl;
 import com.google.gson.Gson;
 
+@RefreshScope
 @RestController
 public class UsuarioController {
 
@@ -64,7 +66,7 @@ public class UsuarioController {
 
 	@RequestMapping("/")
 	public String home() {
-		return "testing " + name;
+		return "Hola " + name;
 	}
 
 	@RequestMapping(value = "/usuario/", method = RequestMethod.PUT)
