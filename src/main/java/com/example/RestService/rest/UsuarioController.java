@@ -3,6 +3,7 @@ package com.example.RestService.rest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 
 import javax.xml.ws.Response;
@@ -10,6 +11,9 @@ import javax.xml.ws.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +34,8 @@ import com.google.gson.Gson;
 @RestController
 public class UsuarioController {
 
+	@Value("${config.name}")
+	String name;
 	@Autowired
 	IUsuario userv;
 
@@ -56,6 +62,11 @@ public class UsuarioController {
 
 	}
 
+	@RequestMapping("/")
+	public String home() {
+		return "testing " + name;
+	}
+
 	@RequestMapping(value = "/usuario/", method = RequestMethod.PUT)
 	public ResponseEntity<Object> actualizarUsuario(@RequestBody UsuarioDto usuario) {
 
@@ -67,7 +78,7 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET)
-	public UsuarioEntity buscarUsuario(@PathVariable("id") int id) {
+	public Optional<UsuarioEntity> buscarUsuario(@PathVariable("id") int id) {
 
 		return userv.buscarUsuario(id);
 	}
@@ -86,7 +97,7 @@ public class UsuarioController {
 		String s = "Login Failure";
 		String username = req.get("username");
 		String pass = req.get("password");
-		
+
 		boolean validate = userv.validarUsuario(username, pass);
 
 		if (validate) {
@@ -100,7 +111,7 @@ public class UsuarioController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("message", s);
 		return new ResponseEntity<Object>(map, HttpStatus.OK);

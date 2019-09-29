@@ -2,6 +2,7 @@ package com.example.RestService.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,33 +66,30 @@ public class UsuarioServiceImpl implements IUsuario {
 
 	@Override
 	public String eliminarUsuario(int idusuario) {
-		    
-		     Gson json = new Gson();
-		     
-		     String r="";
-		     json.toJson(r);
-		
-			try{
-			usuarioR.delete(idusuario);
-			r="Se ha eliminado satisfactoriamente";
-			
-			}
-			catch(Exception e) {
-				
-				r="Falla al eliminar el usuario";
-			}
-			
-			
-			
-		
+
+		Gson json = new Gson();
+
+		String r = "";
+		json.toJson(r);
+
+		try {
+			 usuarioR.deleteById(idusuario);
+			r = "Se ha eliminado satisfactoriamente";
+
+		} catch (Exception e) {
+
+			r = "Falla al eliminar el usuario";
+		}
+
 		return r;
 
 	}
 
 	@Override
-	public UsuarioEntity buscarUsuario(int idusuario) {
+	public Optional<UsuarioEntity> buscarUsuario(int idusuario) {
 
-		UsuarioEntity u = usuarioR.findOne(idusuario);
+		Optional<UsuarioEntity> u = usuarioR.findById(idusuario);
+		
 		return u;
 	}
 

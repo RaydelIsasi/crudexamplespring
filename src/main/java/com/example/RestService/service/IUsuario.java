@@ -1,6 +1,7 @@
 package com.example.RestService.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.json.JSONObject;
 
@@ -16,7 +17,7 @@ public interface IUsuario {
 
 	String eliminarUsuario(int idusuario);
 
-	UsuarioEntity buscarUsuario(int idusuario);
+	Optional<UsuarioEntity> buscarUsuario(int idusuario);
 
 	boolean validarUsuario(String username, String password);
 
